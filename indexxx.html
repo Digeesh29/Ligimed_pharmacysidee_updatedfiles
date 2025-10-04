@@ -1,85 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LigiMed - Smart Pharmacy Procurement Platform</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
-    <!-- Fixed CSS link -->
-    <link rel="stylesheet" href="styless.css">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LigiMed - Smart Pharmacy Procurement Platform</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <!-- Fixed CSS link -->
+  <link rel="stylesheet" href="styless.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 </head>
+
 <body>
 
-    <div id="toast" class="toast">
-        <i class="fas fa-check-circle"></i>
-        <span></span>
-    </div>
+  <div id="toast" class="toast">
+    <i class="fas fa-check-circle"></i>
+    <span></span>
+  </div>
 
 
-    <div id="landing-page-container"></div>
+  <div id="landing-page-container"></div>
 
-    <!-- Auth Modals Container -->
-    <div id="auth-container"></div>
+  <!-- Auth Modals Container -->
+  <div id="auth-container"></div>
 
-    <div id="app-container" class="hidden">
-        </div>
+  <div id="app-container" class="hidden">
+  </div>
 
-      <!-- Fixed JS link -->
-    <script src="scriptt.js"></script>
+  <!-- Fixed JS link -->
+  <script src="scriptt.js"></script>
 
-     
 
-   <script>
-  // Load LandingPage.html dynamically
-  fetch('LandingPage.html')
-    .then(response => response.text())
-    .then(html => {
-      document.getElementById('landing-page-container').innerHTML = html;
 
-      // After landing page loads, attach event listeners to its buttons
-      const loginBtn = document.getElementById('login-nav-btn');
-      const signupBtn = document.getElementById('show-signup-nav');
+  <script>
+    // Load LandingPage.html dynamically
+    fetch('LandingPage.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('landing-page-container').innerHTML = html;
 
-      loginBtn?.addEventListener('click', () => {
-        document.getElementById('login-overlay').classList.remove('hidden');
-      });
+        // Attach nav button listeners
+        const loginBtn = document.getElementById('login-nav-btn');
+        const signupBtn = document.getElementById('show-signup-nav');
 
-      signupBtn?.addEventListener('click', () => {
-        document.getElementById('signup-overlay').classList.remove('hidden');
-      });
-    })
-    .catch(err => console.error('Error loading LandingPage:', err));
+        loginBtn?.addEventListener('click', () => {
+          document.getElementById('login-overlay').classList.remove('hidden');
+        });
 
-  // Load AuthModals.html dynamically
-  fetch('authmodals.html')
-    .then(response => response.text())
-    .then(html => {
-      document.getElementById('auth-container').innerHTML = html;
+        signupBtn?.addEventListener('click', () => {
+          document.getElementById('signup-overlay').classList.remove('hidden');
+        });
 
-      // Add overlay switching inside auth modals
-      document.getElementById('show-signup-from-login')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.getElementById('login-overlay').classList.add('hidden');
-        document.getElementById('signup-overlay').classList.remove('hidden');
-      });
+        // Setup IntersectionObserver here, after landing page is injected
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              obs.unobserve(entry.target); // animate once only
+            }
+          });
+        }, { threshold: 0.2 });
 
-      document.getElementById('show-login-from-signup')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.getElementById('signup-overlay').classList.add('hidden');
-        document.getElementById('login-overlay').classList.remove('hidden');
-      });
-    })
-    .catch(err => console.error('Error loading AuthModals:', err));
-</script>
+        // Add staggered delay automatically
+        const scrollElements = document.querySelectorAll(".scroll-animate");
+        scrollElements.forEach((el, index) => {
+          el.style.transitionDelay = `${(index % 5) * 0.15}s`;
+          observer.observe(el);
+        });
+      })
+      .catch(err => console.error('Error loading LandingPage:', err));
+
+    // Load AuthModals.html dynamically
+    fetch('authmodals.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('auth-container').innerHTML = html;
+
+        // Add overlay switching inside auth modals
+        document.getElementById('show-signup-from-login')?.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.getElementById('login-overlay').classList.add('hidden');
+          document.getElementById('signup-overlay').classList.remove('hidden');
+        });
+
+        document.getElementById('show-login-from-signup')?.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.getElementById('signup-overlay').classList.add('hidden');
+          document.getElementById('login-overlay').classList.remove('hidden');
+        });
+      })
+      .catch(err => console.error('Error loading AuthModals:', err));
+  </script>
 
 
 
 </body>
+
 </html>
