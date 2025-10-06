@@ -1,88 +1,112 @@
+<!-- LOGIN OVERLAY -->
 <div id="login-overlay" class="auth-overlay hidden">
     <div class="auth-modal">
         <div class="auth-header">
             <h2 class="auth-title">Welcome Back</h2>
             <p style="color: var(--text-secondary);">Sign in to access your dashboard</p>
         </div>
-        <form id="login-form">
+
+        <form id="login-form" method="POST" action="/login">
             <div class="form-group">
                 <label for="login-email">Email Address</label>
-                <input type="email" id="login-email" class="form-input" placeholder="Enter your email" required>
+                <input type="email" id="login-email" name="email" class="form-input" placeholder="Enter your email" required>
             </div>
             <div class="form-group">
                 <label for="login-password">Password</label>
-                <input type="password" id="login-password" class="form-input" placeholder="Enter your password" required>
+                <input type="password" id="login-password" name="password" class="form-input" placeholder="Enter your password" required>
             </div>
             <div class="error-message" id="login-error"></div>
+            
             <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">
                 <i class="fas fa-sign-in-alt"></i> Sign In
             </button>
+            
             <p style="text-align: center; margin-top: 20px; color: var(--text-secondary);">
-                Don't have an account? <a href="#" id="show-signup-from-login" style="color: var(--primary); font-weight: 600;">Sign up</a>
+                Don't have an account? 
+                <a href="#" id="show-signup-from-login" style="color: var(--primary); font-weight: 600;">Sign up</a>
             </p>
-            <button type="button" class="btn btn-secondary" style="width: 100%; margin-top: 12px;" onclick="document.getElementById('login-overlay').classList.add('hidden')">
+            
+            <button type="button" class="btn btn-secondary" style="width: 100%; margin-top: 12px;" 
+                onclick="document.getElementById('login-overlay').classList.add('hidden')">
                 Cancel
             </button>
         </form>
     </div>
 </div>
+
+
+<!-- SIGNUP OVERLAY -->
 <div id="signup-overlay" class="auth-overlay hidden">
     <div class="auth-modal">
         <div class="auth-header">
             <h2 class="auth-title">Join LigiMed</h2>
             <p style="color: var(--text-secondary);">Create your account to get started</p>
         </div>
-        <form id="signup-form">
+
+        <form id="signup-form" method="POST" action="/signup">
             <div class="form-row">
                 <div class="form-group">
                     <label for="signup-firstname">First Name</label>
-                    <input type="text" id="signup-firstname" class="form-input" placeholder="John" required>
+                    <input type="text" id="signup-firstname" name="firstName" class="form-input" placeholder="John" required>
                 </div>
                 <div class="form-group">
                     <label for="signup-lastname">Last Name</label>
-                    <input type="text" id="signup-lastname" class="form-input" placeholder="Doe" required>
+                    <input type="text" id="signup-lastname" name="lastName" class="form-input" placeholder="Doe" required>
                 </div>
             </div>
+
             <div class="form-group">
                 <label for="signup-pharmacy">Pharmacy Name</label>
-                <input type="text" id="signup-pharmacy" class="form-input" placeholder="City Pharmacy" required>
+                <input type="text" id="signup-pharmacy" name="pharmacy" class="form-input" placeholder="City Pharmacy" required>
             </div>
             <div class="form-group">
                 <label for="signup-email">Email Address</label>
-                <input type="email" id="signup-email" class="form-input" placeholder="john@pharmacy.com" required>
+                <input type="email" id="signup-email" name="email" class="form-input" placeholder="john@pharmacy.com" required>
             </div>
             <div class="form-group">
                 <label for="signup-phone">Phone Number</label>
-                <input type="tel" id="signup-phone" class="form-input" placeholder="+1 (555) 123-4567" required>
+                <input type="tel" id="signup-phone" name="phone" class="form-input" placeholder="+1 (555) 123-4567" required>
             </div>
             <div class="form-group">
                 <label for="signup-password">Password</label>
-                <input type="password" id="signup-password" class="form-input" placeholder="Create a strong password" required>
+                <input type="password" id="signup-password" name="password" class="form-input" placeholder="Create a strong password" required>
             </div>
+
             <div class="error-message" id="signup-error"></div>
+            
             <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">
                 <i class="fas fa-user-plus"></i> Create Account
             </button>
+
             <p style="text-align: center; margin-top: 20px; color: var(--text-secondary);">
-                Already have an account? <a href="#" id="show-login-from-signup" style="color: var(--primary); font-weight: 600;">Sign in</a>
+                Already have an account? 
+                <a href="#" id="show-login-from-signup" style="color: var(--primary); font-weight: 600;">Sign in</a>
             </p>
-            <button type="button" class="btn btn-secondary" style="width: 100%; margin-top: 12px;" onclick="document.getElementById('signup-overlay').classList.add('hidden')">
+
+            <button type="button" class="btn btn-secondary" style="width: 100%; margin-top: 12px;" 
+                onclick="document.getElementById('signup-overlay').classList.add('hidden')">
                 Cancel
             </button>
         </form>
     </div>
 </div>
+
+
+<!-- CHECKOUT OVERLAY -->
 <div id="checkout-overlay" class="auth-overlay hidden">
     <div class="auth-modal">
         <div class="auth-header">
             <h2 class="auth-title">Complete Your Order</h2>
         </div>
+
         <div class="order-summary">
             <p>Total Amount Payable</p>
             <h3 id="checkout-total">₹0.00</h3>
         </div>
-        <form id="payment-form">
+
+        <form id="payment-form" method="POST" action="/checkout">
             <label style="display: block; font-weight: 600; margin-bottom: 12px;">Select Payment Method</label>
+            
             <div class="payment-options">
                 <div class="payment-option">
                     <input type="radio" id="pay-card" name="payment_method" value="Card" checked>
@@ -101,13 +125,17 @@
                     <label for="pay-cod"><i class="fas fa-money-bill-wave"></i> Cash on Delivery</label>
                 </div>
             </div>
+
             <div class="next-steps-info">
                 You will receive an order confirmation via email and SMS. Our team will process your order for shipment.
             </div>
-            <button type="button" id="confirm-order-btn" class="btn btn-success" style="width: 100%;">
+
+            <button type="submit" id="confirm-order-btn" class="btn btn-success" style="width: 100%;">
                 <i class="fas fa-check-circle"></i> Confirm Order
             </button>
-            <button type="button" id="cancel-order-btn" class="btn btn-secondary" style="width: 100%; margin-top: 12px;">
+
+            <button type="button" id="cancel-order-btn" class="btn btn-secondary" style="width: 100%; margin-top: 12px;"
+                onclick="document.getElementById('checkout-overlay').classList.add('hidden')">
                 Cancel
             </button>
         </form>
